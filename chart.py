@@ -131,7 +131,10 @@ def extractable_value_chart(df, dex):
         x=df['round'],
         y=df[dex + "_ev"],
         name='Theoretically Maximal Extractable Value',
-        yaxis='y2'
+        yaxis='y2',
+        line=dict(
+            color='red'
+        )
     )
     trace3 = go.Scatter(
         x=df['round'],
@@ -139,8 +142,9 @@ def extractable_value_chart(df, dex):
         yaxis='y',
         name='_nolegend_',
         showlegend=False,
-        marker=dict(
-            color='rgba(128, 128, 128, 0.95)'
+        line=dict(
+            color='black',
+            width=0.5
         )
     )
     trace4 = go.Scatter(
@@ -149,8 +153,9 @@ def extractable_value_chart(df, dex):
         yaxis='y',
         name='_nolegend_',
         showlegend=False,
-        marker=dict(
-            color='rgba(128, 128, 128, 0.95)'
+        line=dict(
+            color='black',
+            width=0.5
         )
     )
     layout = go.Layout(
