@@ -4,6 +4,7 @@ import pandas as pd
 import prices_utils as price_utils
 import transactions_utils as transaction_utils
 import chart
+import sankey
 
 def main():
     st.set_page_config(page_title='Algorand DEX Analytics', layout = 'wide', page_icon = './images/logo.jpg')
@@ -41,19 +42,22 @@ def main():
 
     # ---------------------------------------------------------------------
 
-    st.header("Transaction-Count of Swaps")
-    granularity = st.slider('Number of Rounds in each bar', 1, 40, 10)
-
     transactions = pd.read_csv('./data/transactions_28626240.csv')
     transactions = transaction_utils.is_buy_or_sell_algo_swap(transactions)
+
+    st.header("Dominant Market Participants Analysis")
+    num_senders = st.slider('Number of biggest Senders (Descending)', 1, 27, 5)
+    fig = sankey.create_sankey_graph(transactions, num_senders, 8)
+    st.plotly_chart(fig, use_container_width=True)
+
+    
+    st.header("Swap-Volume (Number of Swaps)")
+    granularity = st.slider('Number of Rounds in each bar', 1, 40, 10)
     swap_count_per_round = transaction_utils.create_swap_count_per_round(transactions)
     counts_per_round_range = transaction_utils.counts_per_round_range(swap_count_per_round, granularity)
 
     fig = chart.create_count_plot(counts_per_round_range)
     st.plotly_chart(fig, use_container_width=True)
 
-    st.header("Dominant Market Participants Analysis")
-    st.write("Test")
-    
 if __name__ == "__main__":
     main()
