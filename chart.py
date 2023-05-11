@@ -79,9 +79,7 @@ def create_price_chart(prices):
             title_text="ALGO Price"),
         legend=dict(
             yanchor="top",
-            y=-0.5,  # Adjusts the y position
             xanchor="left",
-            x=0.01,  # Adjusts the x position
             orientation="h"
         )
     )
