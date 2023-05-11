@@ -76,14 +76,7 @@ def create_price_chart(prices):
             dtick=200,
             tickformat='.0f'),
         yaxis=dict(
-            title_text="ALGO Price"),
-        legend=dict(
-            yanchor="top",
-            y=-0.2,  # Adjusts the y position
-            xanchor="left",
-            x=0.01,  # Adjusts the x position
-            orientation="h"
-        )
+            title_text="ALGO Price")
     )
 
     return fig
