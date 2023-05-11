@@ -24,12 +24,12 @@ def create_swap_count_per_round(df, start_round=None, end_round=None):
 
 def counts_per_round_range(swap_count_per_round, round_range):
     if round_range > 1:
-        num_ranges = (swap_count_per_round.shape[0] + round_range - 1) // round_range
+        num_ranges = swap_count_per_round.shape[0] // round_range
         counts_per_range = pd.DataFrame(columns=['round', 'count'])
         for i in range(num_ranges):
             start = i * round_range
-            end = min(start + num_ranges, swap_count_per_round.shape[0])
-            current_range = f"{swap_count_per_round['round'][start]}-{swap_count_per_round['round'][end-1]}"
+            end = start + round_range - 1
+            current_range = f"{swap_count_per_round['round'][start]}-{swap_count_per_round['round'][end]}"
             count_sum = swap_count_per_round['count'][start:end].sum()
             new_info = {'round': current_range, 'count': count_sum}
             counts_per_range = pd.concat([counts_per_range, pd.DataFrame([new_info])], ignore_index=True)
