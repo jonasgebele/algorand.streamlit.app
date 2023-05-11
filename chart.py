@@ -70,7 +70,7 @@ def create_price_chart(prices):
         showlegend=False)
     fig.update_layout(
         xaxis=dict(
-            title="Block-Number (Round)",
+            title="",
             showgrid=False,
             gridwidth=0.05,
             dtick=200,
