@@ -18,7 +18,6 @@ def create_price_chart(prices):
         'HUMBLESWAP_ALGO_USDC',
         'HUMBLESWAP_ALGO_USDT',
         'HUMBLESWAP_ALGO_goUSD',
-        #'ALGOFI_ALGO_USDC',
         'ALGOFI_ALGO_USDT',
         'TINYMAN(v1.1)_ALGO_USDC',
         'TINYMAN(v1.1)_ALGO_USDT',
