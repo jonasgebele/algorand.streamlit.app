@@ -12,7 +12,7 @@ def main():
     st.set_page_config(page_title='Algorand DEX Analytics', layout = 'wide', page_icon = './images/logo.jpg')
 
     #prices = pd.read_csv('./data/responses_28626240.csv')
-    prices = pd.read_csv('./data/responses_27410001_converted.csv')
+    prices = pd.read_csv('./data/responses_27410001.csv')
 
     prices = price_utils.create_profit_deviation_boundaries(prices)
     prices = price_utils.create_dex_prices(prices)
@@ -40,7 +40,7 @@ def main():
 
     values = st.slider(
         "Rounds to display",
-        value=(lowest_round, 27417095),
+        value=(lowest_round, lowest_round+7500),
         min_value=lowest_round,
         max_value=highest_round
     )
