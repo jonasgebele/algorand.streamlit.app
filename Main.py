@@ -16,24 +16,34 @@ def main():
     prices = price_utils.get_ev_value_per_dex(prices)
     prices = price_utils.get_total_ev(prices)
 
+    transactions = pd.read_csv('./data/transactions_28626240.csv')
+    transactions = transaction_utils.is_buy_or_sell_algo_swap(transactions)
+
     st.title("Algorand MEV Analytics") 
+    data_expander = st.expander("Our scraped data")
+    data_expander.caption("DEX Prices")
+    data_expander.dataframe(prices)
+    data_expander.caption("Transaction Data")
+    data_expander.dataframe(transactions)
+
     st.header("ALGO-Stablecoin Prices on DEX's")
     fig =  chart.create_price_chart(prices)
     st.plotly_chart(fig, use_container_width=True)
-    data_expander = st.expander("Our scraped data")
-    data_expander.dataframe(prices)
-
 
     # ---------------------------------------------------------------------
-
-    transactions = pd.read_csv('./data/transactions_28626240.csv')
-    transactions = transaction_utils.is_buy_or_sell_algo_swap(transactions)
 
     st.header("Swap-Volume (Number of Swaps)")
     granularity = st.slider('Number of Rounds in each bar', 1, 40, 5)
     swap_count_per_round = transaction_utils.create_swap_count_per_round(transactions)
     counts_per_round_range = transaction_utils.counts_per_round_range(swap_count_per_round, granularity)
     fig = chart.create_count_plot(counts_per_round_range)
+    st.plotly_chart(fig, use_container_width=True)
+
+    # -----------------------------------------------------------------------
+
+    st.header("Dominant Market Participants Analysis")
+    num_senders = st.slider('Number of biggest Senders (Descending)', 1, 27, 5)
+    fig = sankey.create_sankey_graph(transactions, num_senders, 8)
     st.plotly_chart(fig, use_container_width=True)
 
     # -----------------------------------------------------------------------
@@ -53,13 +63,6 @@ def main():
         ]
     market = st.selectbox('Market to be analyzed for theoretical Maximal Extractable Value', markets)
     fig = chart.extractable_value_chart(prices, market)
-    st.plotly_chart(fig, use_container_width=True)
-
-    # -----------------------------------------------------------------------
-
-    st.header("Dominant Market Participants Analysis")
-    num_senders = st.slider('Number of biggest Senders (Descending)', 1, 27, 5)
-    fig = sankey.create_sankey_graph(transactions, num_senders, 8)
     st.plotly_chart(fig, use_container_width=True)
 
 if __name__ == "__main__":
